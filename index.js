@@ -92,41 +92,45 @@ type Mutation{
 // The root provides a resolver function for each API endpoint
 
 var root = {
-  restaurant: (arg)=>restaurants[arg.id],
-  restaurants : ()=> restaurants,
-  setRestaurant : ({input}) => {
-    restaurants.push({name:input.name,description:input.description,dishes:input.dishes})
-    return input
-  }
-}
-//  restaurants: (arg)=> {
-//    if (arg.restaurant) {
-//          var restaurant = arg.restaurant;
-//          return restaurants.filter(restaurant => restaurant.restaurants = restaurant)
-//        } else {
-//          return restaurants;
-//        }
-//  },
-  
-//  setrestaurant: ({ input }) => {
-    // Your code goes here
-//  },
-// deleterestaurant: ({ id }) => {
-//  const ok = Boolean(restaurants[id])
-//  let delr = restaurants[id];
-//  restaurants = restaurants.filter(item => item,id !== id)
-//  console.log(JSON.stringify(delr))
-//  return {ok}
-//},
-//  editrestaurant: ({ id, ...restaurant }) => {
-//    if(!restaurants[id]) {
-//      throw new Error("Restaurant doesn't exist")
-//    }
-//    restaurants[id] = {
-//      ...restaurants[id], restaurant
-//    }
-//  },
-//};
+  restaurant: (arg) => restaurants[arg.id],
+  restaurants: () => restaurants,
+  setrestaurant: ({ input }) => {
+    restaurants.push({
+      name: input.name,
+      description: input.description,
+    });
+    return restaurants[restaurants.length-1];
+  },
+
+  getrestaurants: ({ input }) => {
+    if (input.restaurant) {
+      var restaurant = input.restaurant;
+      return restaurants.filter(
+        (restaurant) => (restaurant.restaurants = restaurant)
+      );
+    } else {
+      return restaurants;
+    }
+  },
+
+  deleterestaurant: ({ id }) => {
+    const ok = Boolean(restaurants[id]);
+    let delr = restaurants[id];
+    restaurants = restaurants.filter((item) => item, id !== id);
+    console.log(JSON.stringify(delr));
+    return { ok };
+  },
+  editrestaurant: ({ id, ...restaurant }) => {
+    if (!restaurants[id]) {
+      throw new Error("Restaurant doesn't exist");
+    }
+    restaurants[id] = {
+      ...restaurants[id],
+      restaurant,
+    };
+  },
+};
+
 var app = express();
 app.use(
   "/graphql",
@@ -136,6 +140,7 @@ app.use(
     graphiql: true,
   })
 );
+
 var port = 5500;
 app.listen(5500, () => console.log("Running Graphql on Port:" + port));
 
