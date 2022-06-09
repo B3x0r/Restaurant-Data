@@ -99,7 +99,7 @@ var root = {
       name: input.name,
       description: input.description,
     });
-    return restaurants[restaurants.length-1];
+    return restaurants[restaurants.length - 1];
   },
 
   getrestaurants: ({ input }) => {
@@ -116,8 +116,7 @@ var root = {
   deleterestaurant: ({ id }) => {
     const ok = Boolean(restaurants[id]);
     let delr = restaurants[id];
-    restaurants = restaurants.filter((item) => item, id !== id);
-    console.log(JSON.stringify(delr));
+    restaurants = restaurants.filter((item) => item.id !== id);
     return { ok };
   },
   editrestaurant: ({ id, ...restaurant }) => {
@@ -126,8 +125,9 @@ var root = {
     }
     restaurants[id] = {
       ...restaurants[id],
-      restaurant,
+      ...restaurant,
     };
+    return restaurants[id];
   },
 };
 
