@@ -1,6 +1,6 @@
 # Restaurant-Data
 Week 24 GraphQL assignment using GraphiQL and mutations
-<img src= "restraurant-GraphQL.jpg" width='300'/>
+<img src= "restaurant-GraphQL.jpg" width='300'/>
 
 
 #### Installation:
